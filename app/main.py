@@ -1,10 +1,12 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.routers.health import router as health_router
+
 app = FastAPI(
     title="CareerLens API",
     description="RAG-powered resume vs job description analyzer",
-    version="0.1.0"
+    version="0.1.0",
 )
 
 app.add_middleware(
@@ -14,7 +16,4 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-@app.get("/health")
-async def health_check():
-    return {"status": "ok", "message": "CareerLens API is running"}
+app.include_router(health_router)
