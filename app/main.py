@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.database import Base, engine
+from app.models.chunk import Chunk
 from app.models.resume import Resume
 from app.routers.health import router as health_router
 from app.routers.resume import router as resume_router
