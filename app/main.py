@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.database import Base, engine
+from app.models.resume import Resume
 from app.routers.health import router as health_router
 from app.routers.resume import router as resume_router
 
@@ -19,3 +21,5 @@ app.add_middleware(
 )
 app.include_router(health_router)
 app.include_router(resume_router)
+
+Base.metadata.create_all(bind=engine)
