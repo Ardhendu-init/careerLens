@@ -1,5 +1,6 @@
 import json
 
+from app.config import settings
 from app.services.embedding import client
 
 
@@ -22,5 +23,5 @@ def analyze_match(jd_text: str, resume_chunks: list[str]) -> dict:
 
     No markdown, no explanation. JSON only."""
 
-    response = client.models.generate_content(model="gemini-2.5-flash", contents=prompt)
+    response = client.models.generate_content(model=settings.LLM_MODEL, contents=prompt)
     return json.loads(response.text)
