@@ -1,0 +1,16 @@
+from fastapi import APIRouter, Depends
+from sqlalchemy.orm import Session
+
+from app.database import get_db
+from app.models.schemas import JDInput
+from app.services.llm import analyze_match
+from app.services.retrieval import get_relevant_chunk
+
+router = APIRouter(prefix="/analyze")
+
+
+@router.post("/")
+def analyze_resume(jd_input: JDInput, db: Session = Depends(get_db)):
+    resume_chunks = get_relevant_chunk(jd_text=jd_input.jd_text, db=db)
+    res = analyze_match(jd_text=jd_input.jd_text, resume_chunks=resume_chunks)
+    return res

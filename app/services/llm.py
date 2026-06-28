@@ -22,5 +22,5 @@ def analyze_match(jd_text: str, resume_chunks: list[str]) -> dict:
 
     No markdown, no explanation. JSON only."""
 
-    response = client.models.generate_content(model="gemini-1.5-flash", contents=prompt)
+    response = client.models.generate_content(model="gemini-2.5-flash", contents=prompt)
     return json.loads(response.text)
