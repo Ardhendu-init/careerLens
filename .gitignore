@@ -1,18 +1,24 @@
-# Python-generated files
+# OS files
+.DS_Store
+
+# Editor
+.vscode/
+
+# Env
+.env
+
+# Python
 __pycache__/
 *.py[oc]
+*.pyc
 build/
 dist/
 wheels/
 *.egg-info
-
-# Virtual environments
-.venv
-cat > .gitignore << 'EOF'
-.env
 .venv/
-__pycache__/
-*.pyc
-.DS_Store
-EOF
-.vscode/
+.pytest_cache/
+
+# Node / frontend
+node_modules/
+.next/
+out/
