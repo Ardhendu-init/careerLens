@@ -12,8 +12,11 @@ const initialState: ActionState<AnalysisResult> = {
   message: "",
 };
 
-export default function AnalyzeForm() {
-  const [state, formAction] = useActionState(analyzeResume, initialState);
+export default function AnalyzeForm({ resumeId }: { resumeId: number | null }) {
+  const [state, formAction] = useActionState(
+    analyzeResume.bind(null, resumeId),
+    initialState,
+  );
 
   return (
     <div className="space-y-6">
@@ -25,25 +28,33 @@ export default function AnalyzeForm() {
           <h2 className="text-base font-semibold">Paste a job description</h2>
         </div>
 
-        <form action={formAction} className="space-y-3">
-          <textarea
-            name="jd-text"
-            required
-            rows={8}
-            placeholder="Paste the job description you're targeting…"
-            className="w-full resize-y rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none placeholder:text-muted focus-visible:border-brand focus-visible:ring-2 focus-visible:ring-brand/30"
-          />
-          <div className="flex items-center justify-between gap-3">
-            {/* Only surface errors here; success renders as the result card below. */}
-            <StatusBanner
-              status={state.status === "error" ? "error" : "idle"}
-              message={state.status === "error" ? state.message : ""}
+        {resumeId === null ? (
+          <p className="text-sm text-muted">
+            Upload your resume first to analyze it against a job description.
+          </p>
+        ) : (
+          <form action={formAction} className="space-y-3">
+            <textarea
+              name="jd-text"
+              required
+              rows={8}
+              placeholder="Paste the job description you're targeting…"
+              className="w-full resize-y rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none placeholder:text-muted focus-visible:border-brand focus-visible:ring-2 focus-visible:ring-brand/30"
             />
-            <div className="ml-auto">
-              <SubmitButton pendingLabel="Analyzing…">Analyze fit</SubmitButton>
+            <div className="flex items-center justify-between gap-3">
+              {/* Only surface errors here; success renders as the result card below. */}
+              <StatusBanner
+                status={state.status === "error" ? "error" : "idle"}
+                message={state.status === "error" ? state.message : ""}
+              />
+              <div className="ml-auto">
+                <SubmitButton pendingLabel="Analyzing…">
+                  Analyze fit
+                </SubmitButton>
+              </div>
             </div>
-          </div>
-        </form>
+          </form>
+        )}
       </section>
 
       {state.status === "success" && state.data && (

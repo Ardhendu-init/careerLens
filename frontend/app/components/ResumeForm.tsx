@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 import { uploadResume } from "@/app/actions/resume";
 import type { ActionState } from "@/app/lib/types";
 import SubmitButton from "./SubmitButton";
@@ -8,8 +8,18 @@ import StatusBanner from "./StatusBanner";
 
 const initialState: ActionState<never> = { status: "idle", message: "" };
 
-export default function ResumeForm() {
+export default function ResumeForm({
+  onResumeUploaded,
+}: {
+  onResumeUploaded: (id: number) => void;
+}) {
   const [state, formAction] = useActionState(uploadResume, initialState);
+
+  useEffect(() => {
+    if (state.status === "success" && state.data) {
+      onResumeUploaded(state.data.resume_id);
+    }
+  }, [state, onResumeUploaded]);
 
   return (
     <section className="rounded-xl border border-border bg-card p-6 shadow-sm">
