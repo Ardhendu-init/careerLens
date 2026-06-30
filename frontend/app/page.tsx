@@ -1,8 +1,11 @@
+"use client";
 import Header from "@/app/components/Header";
 import ResumeForm from "@/app/components/ResumeForm";
 import AnalyzeForm from "@/app/components/AnalyzeForm";
+import { useState } from "react";
 
 export default function Home() {
+  const [resumeId, setResumeId] = useState<number | null>(null);
   return (
     <>
       <Header />
@@ -12,15 +15,15 @@ export default function Home() {
             See how you stack up
           </h2>
           <p className="mx-auto mt-2 max-w-xl text-sm text-muted">
-            Save your resume once, then analyze it against any job description to
-            get a match score, the skills you have, the ones you&apos;re missing,
-            and advice on how to position yourself.
+            Save your resume once, then analyze it against any job description
+            to get a match score, the skills you have, the ones you&apos;re
+            missing, and advice on how to position yourself.
           </p>
         </div>
 
         <div className="space-y-6">
-          <ResumeForm />
-          <AnalyzeForm />
+          <ResumeForm onResumeUploaded={setResumeId} />
+          <AnalyzeForm resumeId={resumeId} />
         </div>
       </main>
 

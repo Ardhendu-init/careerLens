@@ -7,6 +7,7 @@ class ResumeUpload(BaseModel):
 
 class JDInput(BaseModel):
     jd_text: str
+    resume_id: int
 
 
 class AnalysisResult(BaseModel):
