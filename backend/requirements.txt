@@ -94,6 +94,8 @@ pydantic-core==2.46.4
     # via pydantic
 pydantic-settings==2.14.2
     # via careerlens (pyproject.toml)
+pyjwt==2.13.0
+    # via careerlens (pyproject.toml)
 pypdf2==3.0.1
     # via careerlens (pyproject.toml)
 python-dotenv==1.2.2
