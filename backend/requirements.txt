@@ -21,13 +21,23 @@ cffi==2.0.0
 charset-normalizer==3.4.7
     # via requests
 click==8.4.2
-    # via uvicorn
+    # via
+    #   huggingface-hub
+    #   uvicorn
 cryptography==49.0.0
     # via google-auth
 distro==1.9.0
     # via google-genai
 fastapi==0.138.2
     # via careerlens (pyproject.toml)
+filelock==3.29.7
+    # via huggingface-hub
+flashrank==0.2.10
+    # via careerlens (pyproject.toml)
+flatbuffers==25.12.19
+    # via onnxruntime
+fsspec==2026.6.0
+    # via huggingface-hub
 google-auth==2.55.1
     # via google-genai
 google-genai==2.10.0
@@ -36,19 +46,36 @@ h11==0.16.0
     # via
     #   httpcore
     #   uvicorn
+hf-xet==1.5.1
+    # via huggingface-hub
 httpcore==1.0.9
     # via httpx
 httpx==0.28.1
-    # via google-genai
+    # via
+    #   google-genai
+    #   huggingface-hub
+huggingface-hub==1.23.0
+    # via tokenizers
 idna==3.18
     # via
     #   anyio
     #   httpx
     #   requests
 numpy==2.5.0
-    # via pgvector
+    # via
+    #   flashrank
+    #   onnxruntime
+    #   pgvector
+onnxruntime==1.27.0
+    # via flashrank
+packaging==26.2
+    # via
+    #   huggingface-hub
+    #   onnxruntime
 pgvector==0.4.2
     # via careerlens (pyproject.toml)
+protobuf==7.35.1
+    # via onnxruntime
 psycopg2-binary==2.9.12
     # via careerlens (pyproject.toml)
 pyasn1==0.6.3
@@ -75,8 +102,11 @@ python-dotenv==1.2.2
     #   pydantic-settings
 python-multipart==0.0.32
     # via careerlens (pyproject.toml)
+pyyaml==6.0.3
+    # via huggingface-hub
 requests==2.34.2
     # via
+    #   flashrank
     #   google-auth
     #   google-genai
 sniffio==1.3.1
@@ -87,11 +117,18 @@ starlette==1.3.1
     # via fastapi
 tenacity==9.1.4
     # via google-genai
+tokenizers==0.23.1
+    # via flashrank
+tqdm==4.68.4
+    # via
+    #   flashrank
+    #   huggingface-hub
 typing-extensions==4.15.0
     # via
     #   anyio
     #   fastapi
     #   google-genai
+    #   huggingface-hub
     #   pydantic
     #   pydantic-core
     #   sqlalchemy
