@@ -1,8 +1,11 @@
+from flashrank import Ranker, RerankRequest
 from sqlalchemy import func
 from sqlalchemy.orm import Session
 
 from app.models.chunk import Chunk
 from app.services.embedding import embed_text
+
+ranker = Ranker()
 
 
 def get_relevant_chunk(
@@ -44,3 +47,11 @@ def get_relevant_chunk(
     # Step 3 — sort and return
     sorted_ids = sorted(scores, key=lambda id: scores[id], reverse=True)
     return [all_chunks[id] for id in sorted_ids[:limit]]
+
+
+def rerank_chunks(jd_text: str, chunks: list[str]) -> list[str]:
+    passages = [{"id": i, "text": chunk} for i, chunk in enumerate(chunks)]
+
+    request = RerankRequest(query=jd_text, passages=passages)
+    results = ranker.rerank(request)
+    return [r["text"] for r in results]  # ✅ return reranked texts in order
