@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from pgvector.sqlalchemy import Vector
-from sqlalchemy import Column, DateTime, FetchedValue, ForeignKey, Integer, String
+from sqlalchemy import Column, Computed, DateTime, ForeignKey, Integer, String
 from sqlalchemy.dialects.postgresql import TSVECTOR
 
 from app.database import Base
@@ -15,4 +15,8 @@ class Chunk(Base):
     text = Column(String(2000))
     embedding = Column(Vector(768))
     created_at = Column(DateTime, default=datetime.utcnow)
-    text_search = Column(TSVECTOR, nullable=True, server_default=FetchedValue())
+    text_search = Column(
+        TSVECTOR,
+        Computed("to_tsvector('english', text)", persisted=True),
+        nullable=True,
+    )
