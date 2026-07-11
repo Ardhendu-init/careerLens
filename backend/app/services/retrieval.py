@@ -5,7 +5,18 @@ from sqlalchemy.orm import Session
 from app.models.chunk import Chunk
 from app.services.embedding import embed_text
 
-ranker = Ranker()
+_ranker: Ranker | None = None
+
+
+def _get_ranker() -> Ranker:
+    # Lazy-loaded: Ranker() downloads a model file from Hugging Face on first
+    # use. Doing this at import time would block app startup on a network
+    # call, and any transient failure would crash the whole API instead of
+    # just the rerank path.
+    global _ranker
+    if _ranker is None:
+        _ranker = Ranker()
+    return _ranker
 
 
 def get_relevant_chunk(
@@ -53,5 +64,5 @@ def rerank_chunks(jd_text: str, chunks: list[str]) -> list[str]:
     passages = [{"id": i, "text": chunk} for i, chunk in enumerate(chunks)]
 
     request = RerankRequest(query=jd_text, passages=passages)
-    results = ranker.rerank(request)
+    results = _get_ranker().rerank(request)
     return [r["text"] for r in results]  # ✅ return reranked texts in order
