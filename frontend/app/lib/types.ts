@@ -1,3 +1,9 @@
+export type ResumeSummary = {
+  id: number;
+  created_at: string;
+  preview: string;
+};
+
 export type AnalysisResult = {
   match_score: number;
   matched_skills: string[];

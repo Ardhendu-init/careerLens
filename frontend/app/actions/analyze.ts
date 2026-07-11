@@ -1,6 +1,7 @@
 "use server";
 
 import { apiPost } from "@/app/lib/api";
+import { getAccessToken } from "@/app/lib/supabase/server";
 import type { ActionState, AnalysisResult } from "@/app/lib/types";
 
 export async function analyzeResume(
@@ -24,10 +25,12 @@ export async function analyzeResume(
   }
 
   try {
-    const data = await apiPost<AnalysisResult>("/analyze/", {
-      jd_text: jdText,
-      resume_id: resumeId,
-    });
+    const token = await getAccessToken();
+    const data = await apiPost<AnalysisResult>(
+      "/analyze/",
+      { jd_text: jdText, resume_id: resumeId },
+      token,
+    );
     return { status: "success", message: "Analysis complete.", data };
   } catch (error) {
     return {
