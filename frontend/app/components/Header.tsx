@@ -1,4 +1,12 @@
-export default function Header() {
+import { logout } from "@/app/actions/auth";
+import { createClient } from "@/app/lib/supabase/server";
+
+export default async function Header() {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
   return (
     <header className="border-b border-border bg-card/60 backdrop-blur">
       <div className="mx-auto flex max-w-3xl items-center gap-3 px-6 py-4">
@@ -24,6 +32,16 @@ export default function Header() {
             Match your resume against any job description
           </p>
         </div>
+        {user && (
+          <form action={logout} className="ml-auto">
+            <button
+              type="submit"
+              className="text-sm font-medium text-muted hover:text-foreground"
+            >
+              Log out
+            </button>
+          </form>
+        )}
       </div>
     </header>
   );

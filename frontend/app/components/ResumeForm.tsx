@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { uploadResume } from "@/app/actions/resume";
 import type { ActionState } from "@/app/lib/types";
 import SubmitButton from "./SubmitButton";
@@ -8,18 +9,18 @@ import StatusBanner from "./StatusBanner";
 
 const initialState: ActionState<never> = { status: "idle", message: "" };
 
-export default function ResumeForm({
-  onResumeUploaded,
-}: {
-  onResumeUploaded: (id: number) => void;
-}) {
+export default function ResumeForm({ onUploaded }: { onUploaded?: () => void }) {
   const [state, formAction] = useActionState(uploadResume, initialState);
+  const router = useRouter();
 
   useEffect(() => {
-    if (state.status === "success" && state.data) {
-      onResumeUploaded(state.data.resume_id);
+    if (state.status === "success") {
+      // The resume list lives in the parent Server Component — refresh it
+      // so the new resume shows up instead of tracking an id in client state.
+      router.refresh();
+      onUploaded?.();
     }
-  }, [state, onResumeUploaded]);
+  }, [state, router, onUploaded]);
 
   return (
     <section className="rounded-xl border border-border bg-card p-6 shadow-sm">

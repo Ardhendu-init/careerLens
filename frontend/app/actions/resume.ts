@@ -1,6 +1,7 @@
 "use server";
 
 import { apiPost } from "@/app/lib/api";
+import { getAccessToken } from "@/app/lib/supabase/server";
 import type { ActionState } from "@/app/lib/types";
 
 type UploadResponse = {
@@ -20,7 +21,8 @@ export async function uploadResume(
   }
 
   try {
-    const data = await apiPost<UploadResponse>("/resume/", { text });
+    const token = await getAccessToken();
+    const data = await apiPost<UploadResponse>("/resume/", { text }, token);
     return {
       status: "success",
       message: `Resume saved — indexed into ${data.chunks} chunk${

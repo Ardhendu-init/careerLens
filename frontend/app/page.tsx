@@ -1,11 +1,11 @@
-"use client";
 import Header from "@/app/components/Header";
 import ResumeForm from "@/app/components/ResumeForm";
-import AnalyzeForm from "@/app/components/AnalyzeForm";
-import { useState } from "react";
+import ResumeWorkspace from "@/app/components/ResumeWorkspace";
+import { getMyResumes } from "@/app/lib/resumes";
 
-export default function Home() {
-  const [resumeId, setResumeId] = useState<number | null>(null);
+export default async function Home() {
+  const resumes = await getMyResumes();
+
   return (
     <>
       <Header />
@@ -22,8 +22,11 @@ export default function Home() {
         </div>
 
         <div className="space-y-6">
-          <ResumeForm onResumeUploaded={setResumeId} />
-          <AnalyzeForm resumeId={resumeId} />
+          {resumes.length === 0 ? (
+            <ResumeForm />
+          ) : (
+            <ResumeWorkspace resumes={resumes} />
+          )}
         </div>
       </main>
 

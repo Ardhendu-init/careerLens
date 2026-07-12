@@ -12,6 +12,7 @@ dependencies = [
     "pgvector>=0.4.2",
     "psycopg2-binary>=2.9.12",
     "pydantic>=2.13.4",
+    "pyjwt>=2.10.1",
     "pydantic-settings>=2.14.2",
     "pypdf2>=3.0.1",
     "python-dotenv>=1.2.2",

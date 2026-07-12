@@ -204,10 +204,11 @@ careerlens/
 │   │   └── utils/           # text chunking
 │   └── tests/
 └── frontend/
-    └── src/app/
-        ├── components/      # ResumeForm, AnalyzeForm, ScoreRing, SkillChips, etc.
+    └── app/
+        ├── components/      # ResumeForm, AnalyzeForm, AnalysisResultView, ScoreRing, Header, StatusBanner, SubmitButton
         ├── actions/         # Server Actions (uploadResume, analyzeResume)
-        └── lib/             # typed API client, shared types
+        ├── lib/             # typed API client, shared types
+        └── utils/           # action helpers
 ```
 
 ---
