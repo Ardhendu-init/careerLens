@@ -54,7 +54,9 @@ export default function ResumeWorkspace({
                 />
                 <span className="flex-1 truncate">{resume.preview}</span>
                 <span className="shrink-0 text-xs text-muted">
-                  {new Date(resume.created_at).toLocaleDateString()}
+                  {new Date(resume.created_at).toLocaleDateString("en-US", {
+                    timeZone: "UTC",
+                  })}
                 </span>
               </label>
             ))}
